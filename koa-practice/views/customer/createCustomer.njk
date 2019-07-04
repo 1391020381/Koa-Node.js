@@ -1,0 +1,10 @@
+{% extends '../common/layout-demo.njk' %}
+{% block content %}
+<form  action="/createCustomer" method="post">
+<input id="name" name="name" type="text" placeholder="请输入姓名"><br>
+<input id="sex" name="sex" type="text" placeholder="请输入性别"><br>
+<input id="address" name="address" type="text" placeholder="请输入地址"><br>
+<input id="email" name="email" type="text" placeholder="请输入邮箱"><br>
+<button type="submit">提交</button>
+</form>
+{% endblock %}

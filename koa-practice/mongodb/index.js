@@ -1,0 +1,1 @@
+const getTimeRangeList = require('./method').getTimeRangeList
