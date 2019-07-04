@@ -1,0 +1,31 @@
+{
+  "name": "koa-node",
+  "version": "1.0.0",
+  "description": "Koa与Node.js开发实战",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1391020381/Koa-Node.js.git"
+  },
+  "keywords": [
+    "Koa与Node.js开发实战"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1391020381/Koa-Node.js/issues"
+  },
+  "homepage": "https://github.com/1391020381/Koa-Node.js#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.5.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.0"
+  }
+}
