@@ -1,0 +1,11 @@
+const Koa = require('koa')
+const app = new Koa()
+const router = require('./router')
+const { open ,error} = require('./lib/db/connect')
+ app.use(router.routes())
+app.use(router.allowedMethods())
+open()
+error()
+app.listen(4001,()=>{
+  console.log('app is listening 4001,http://127.0.0.1:4001')
+})

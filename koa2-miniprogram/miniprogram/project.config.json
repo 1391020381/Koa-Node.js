@@ -1,0 +1,20 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "miniprogram",
+	"description": "云相册",
+	"appid": "wx1aa122b03b0cf697",
+	"AppSecret": "9132cc90837733d1ea38e1e62a991c0a",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
+}
