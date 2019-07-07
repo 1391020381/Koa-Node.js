@@ -15,3 +15,4 @@
 * [Git 以分支的方式同时管理多个项目](https://www.cnblogs.com/huangtailang/p/4748075.html)
 * [awesome-micro-npm-packages](https://github.com/parro-it/awesome-micro-npm-packages)
 
+* [How-to-learn-node-correctly](https://github.com/i5ting/How-to-learn-node-correctly#%E9%9D%9E%E7%A7%91%E7%8F%AD%E5%87%BA%E8%BA%AB%E5%A6%82%E4%BD%95nodejs)
