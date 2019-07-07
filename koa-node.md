@@ -13,4 +13,5 @@
 ## 使用NVM控制Node.js版本
 
 * [Git 以分支的方式同时管理多个项目](https://www.cnblogs.com/huangtailang/p/4748075.html)
+* [awesome-micro-npm-packages](https://github.com/parro-it/awesome-micro-npm-packages)
 
