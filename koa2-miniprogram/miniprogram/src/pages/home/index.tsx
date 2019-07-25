@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
-
+import { AtButton } from 'taro-ui'
 
 import './index.scss'
 
@@ -18,31 +18,52 @@ import './index.scss'
 
 class Index extends Component {
 
-    /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
-    config: Config = {
+  /**
+ * 指定config的类型声明为: Taro.Config
+ *
+ * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
+ * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
+ * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
+ */
+  config: Config = {
     navigationBarTitleText: '简易云相册'
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
+  async scanCode() {
+    try {
+      const { errMsg, result } = await Taro.scanCode({})
+      if (errMsg === 'scanCode:ok') {
+        console.log('result-scanCode:', result)
+      }
+    } catch (e) {
+      console.log('scanCode-e:', e)
+    }
 
-  render () {
+  }
+  render() {
     return (
       <View className='home'>
-       <View className='title'></View>
+        <View className='title'>hello</View>
+        <AtButton type='primary' className='scan-code' onClick={this.scanCode.bind(this)}>扫码登录后台管理系统</AtButton>
+        <View className='at-row bottom'>
+          <View className='at-col icon'>
+            <View className='at-icon at-icon-home'></View>
+            <View>我的</View>
+          </View>
+          <View className='at-col icon'>
+          <View className='at-icon at-icon-image'></View>
+           <View>相册</View>
+           </View>
+        </View>
       </View>
     )
   }
