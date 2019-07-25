@@ -15,9 +15,9 @@ module.exports = {
   async getErCode (){
     const code = encodeErCode()
     await add(code)
-    setTimeout(()=>{
+    setTimeout(()=>{   // 定时清除二维码消息 默认时间30s
       removeDate(code)
-    },3000)
+    },30000)  
     return code
   },
   async setSessionKeyForCode(code,sessionKey){

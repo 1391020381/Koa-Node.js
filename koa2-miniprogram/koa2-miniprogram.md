@@ -3,6 +3,8 @@
 * 小程序登录获取code
 * 后台通过 appKey(appId) appSecret code 获取到用户信息  ,并根据用户信息建立用户系统   
 * const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appKey}&secret=${appSecret}&js_code=${code}&grant_type=authorization_code`
+* openid  session_key  unionid(满足条件)  errcode errmsg
+* `小程序中获取用户的信息(用户名、头像),然后将这些消息通过接口传递给后端服务。`
 
 ```
 // userSchema 
@@ -18,7 +20,7 @@ avatar
 userType  // 用户类型 标记管理员  普通用户  禁用用户
 
 ```
-2. 扫码登录
+1. 扫码登录
 * 访问管理后台,当检测到未登录,跳转到扫码登录页面
 * 扫码登录页面请求后台服务器接口,`获取待生成二维码的编码字符串,同时后台服务器存储该编码字符串`
 * 扫码登录页面根据后台接口返回的字符串生成二维码
@@ -40,7 +42,7 @@ sessionKey
 ## 小程序接口
 1. 相册模型  
 ```
-// albumSchema
+// albumSchema 在小程序中用户输入相册名称 创建相册  userId name __id相册id
 
 userId  name
 
@@ -48,7 +50,7 @@ userId  name
 2. 照片模型 
 
 ```
-// photoSchema
+// photoSchema 返回的相册列表中有 每个相册的__id  当用户再某个相册上传图片的时候,告诉后台用户再那个相册中上传了图片
 
 userId 
 
