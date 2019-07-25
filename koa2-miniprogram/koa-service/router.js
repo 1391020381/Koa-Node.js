@@ -69,14 +69,7 @@ router.get('/login/errcode/check/:code', async (ctx, next) => {
     }
   }
 })
-router.post(
-  '/album',
-  auth,
-  async (ctx, next) => {
-    const { name } = ctx.request.body
-  },
-  responseOK
-)
+
 
 //添加相册
 router.post(

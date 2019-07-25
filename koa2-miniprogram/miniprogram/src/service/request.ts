@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro'
 import baseUrl from './config'
 
-function request(params, method = 'GET') {
+ async function  request(params, method = 'GET') {
+  console.log('request-params:',params)
   let { url, data } = params
   let contentType = 'application/x-www-form-urlencoded'
   contentType = params.contentType || contentType
@@ -15,7 +16,16 @@ function request(params, method = 'GET') {
       'x-session': Taro.getStorageSync('sessionKey')
     }
   }
-  return Taro.request(option)
+   try{
+     const {statusCode,errMsg,data} = await Taro.request(option)
+     if(statusCode === 200){
+      return  Promise.resolve(data)
+     }else{
+       console.log('errMsg:',errMsg)
+     }
+   }catch(e){
+    return  Promise.reject(e)
+   }
 }
 
 export function GET(url, data, options) {

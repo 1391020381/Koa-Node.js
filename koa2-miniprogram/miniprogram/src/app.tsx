@@ -3,7 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 
 import Index from './pages/index'
-
+import home from './pages/home'
 import configStore from './store'
 
 import './app.scss'
@@ -27,6 +27,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      // 'pages/home/index',
       'pages/index/index'
     ],
     window: {
@@ -44,12 +45,12 @@ class App extends Component {
    try{
     const { code } = await Taro.login()
     console.log('login-code:',code)
-    const { data ,status} = await login(code)
+    const {status,data:{sessionKey}} = await login(code)
     if(status === 0){
       Taro.setStorageSync('sessionKey',sessionKey)
     }
    }catch(e){
-     console.log(e)
+     console.log('e:',e)
    }
   }
   componentDidShow () {}
