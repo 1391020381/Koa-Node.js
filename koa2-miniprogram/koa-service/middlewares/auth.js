@@ -7,7 +7,7 @@ module.exports = async function(ctx,next){
   const user = await findBySessionKey(sessionKey)
   if(user){
     ctx.state.user = {
-      id:user_id,
+      id:user._id,
       name:user.name,
       avatar:user.avatar,
       isAdmin:user.userType === 1

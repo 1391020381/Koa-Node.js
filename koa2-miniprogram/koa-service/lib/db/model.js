@@ -45,7 +45,7 @@ const albumSchema = new mongoose.Schema(
     versionKey: false,
     timestamps: {
       createdAt: 'created',
-      updateAt: 'upudated'
+      updateAt: 'updated'
     }
   }
 )

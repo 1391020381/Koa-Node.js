@@ -7,7 +7,7 @@ import home from './pages/home'
 import configStore from './store'
 import 'taro-ui/dist/style/index.scss'
 import './app.scss'
-import login from './service/api.ts'
+import {login} from './service/api.ts'
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -28,6 +28,7 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/home/index',
+      'pages/album/index',
       'pages/index/index'
     ],
     window: {

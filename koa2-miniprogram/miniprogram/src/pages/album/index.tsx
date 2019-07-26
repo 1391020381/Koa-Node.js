@@ -1,8 +1,8 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
-
+import { AtButton, AtImagePicker } from 'taro-ui'
+import { getAlbumList } from '../../service/api.ts'
 import './index.scss'
 
 // #region 书写注意
@@ -26,67 +26,57 @@ class Index extends Component {
  * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
  */
   config: Config = {
-    navigationBarTitleText: '简易云相册'
+    navigationBarTitleText: '相册列表'
   }
-
+  constructor() {
+    super(...arguments)
+    this.state = {
+      albumList: [],
+      files: []
+    }
+  }
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
-
+  componentWillMount() {
+    console.log('getAlbumList')
+    this.getAlbumList()
+  }
   componentWillUnmount() {
-     this.getAuthorize()
+
   }
 
   componentDidShow() { }
 
   componentDidHide() { }
-  async scanCode() {
+  async getAlbumList() {
     try {
-      const { errMsg, result } = await Taro.scanCode({})
-      if (errMsg === 'scanCode:ok') {
-        console.log('result-scanCode:', result)
+      const { data, status } = await getAlbumList()
+      console.log(data, status)
+      if (status === 0) {
+        this.setState(
+          {
+            albumList: data || []
+          }
+        )
       }
-    } catch (e) {
-      console.log('scanCode-e:', e)
-    }
-
-  }
-  async getUserInfo(e) {
-    console.log(e)
-    try {
-      const result = await Taro.getUserInfo()
-      console.log('result:', result)
-    } catch (e) {
-      console.log('getUserInfo:', e)
-    }
-  }
-  async getAuthorize() {
-    try {
-      const result = Taro.authorize({ scope: 'scope.record' })
-      console.log('result:', result)
     } catch (e) {
       console.log(e)
     }
   }
-  goAlbumList(){
-    Taro.navigateTo({url:'/pages/album/index'})
+  onChange(files) {
+    console.log('files:', files)
+    this.setState({
+      files
+    })
   }
   render() {
     return (
-      <View className='home'>
-        <View className='title'>欢迎使用,云相册</View>
-        {/* <Button type='onGetUserInfo' onClick={this.getUserInfo}>请授权获取用户头像</Button> */}
-        <AtButton type='primary' className='scan-code' onClick={this.scanCode.bind(this)}>扫码登录后台管理系统</AtButton>
-        <View className='at-row bottom'>
-          <View className='at-col icon'>
-            <View className='at-icon at-icon-home'></View>
-            <View>我的</View>
-          </View>
-          <View className='at-col icon' onClick={this.goAlbumList.bind(this)}>
-            <View className='at-icon at-icon-image'></View>
-            <View>相册</View>
-          </View>
-        </View>
+      <View className='album'>
+        {!this.state.albumList.length && <AtImagePicker
+          files={this.state.files}
+          onChange={this.onChange.bind(this)}
+        />}
       </View>
     )
   }

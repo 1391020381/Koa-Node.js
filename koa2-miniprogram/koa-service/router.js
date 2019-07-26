@@ -108,7 +108,7 @@ router.del(
 //  相册列表
 
 router.get('/xcx/album', auth, async (ctx, next) => {
-  const album = await photo.getAlbum(ctx.state.user.id)
+  const albums = await photo.getAlbum(ctx.state.user.id)
   ctx.body = {
     data: albums,
     status: 0
