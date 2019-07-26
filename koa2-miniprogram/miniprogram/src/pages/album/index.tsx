@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { AtButton, AtImagePicker } from 'taro-ui'
-import { getAlbumList } from '../../service/api.ts'
+import { getAlbumList,upladPhoto  } from '../../service/api.ts'
 import './index.scss'
 
 // #region 书写注意
@@ -66,9 +66,20 @@ class Index extends Component {
   }
   onChange(files) {
     console.log('files:', files)
-    this.setState({
-      files
-    })
+    this.uploadImage(files)
+
+  }
+  async uploadImage(files, name) {
+    try {
+      const { data, status } = await upladPhoto(files, 'photo')
+      if (status === 0) {
+        this.setState({
+          files
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
   render() {
     return (

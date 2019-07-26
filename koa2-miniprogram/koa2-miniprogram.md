@@ -82,4 +82,96 @@ isDelete
 
 
 
+
 * 理清楚业务逻辑,设计数据库字段,定义接口,书写接口/前端页面  前后端联调
+
+# 深入浅出React和Redux
+## 组件
+1. prop
+* 外部组件传递数据给React组件 
+* 组件要反馈数据给外部 
+* prop的类型不限于纯数据,也可以是函数,函数类型的prop等于让父组件交给子组件一个回调函数,子组件在恰当的实际调用函数类型的prop,可以带上必要参数,这样就可以反过来把信息传递给外部世界。
+2. state
+* 组件自身的状态
+3. 组件生命周期 
+*  componentWillReceiveProps(nextProps)
+*  主要是父组件的render函数被调用,在render函数里面被渲染的子组件就会经历更新过程。
+
+## Flux 和 Redux
+  ### Flux
+  * Flux是一个发布订阅模式,Flux维护数据,view中获取Flux中的数据展示,并且可改变Flux中的数据,`也可以在view中监听Flux中数据的变化,再次重新渲染视图`
+
+### Redux
+* Redux基本原则
+1. 唯一数据源
+2. 保持状态只读
+3. 数据改变只能通过纯函数
+
+
+* ActionType.js
+* Actions.js 
+
+```
+export const increment = (counterCaption) =>{
+  return {
+    type:ActionTypes.INCREMENT
+    counterCaption:counterCaption
+  }
+}
+
+```
+* Reducer.js
+
+```
+export default (state,action)=>{
+  const { counterCaption } = action
+  switch (action.type){
+    case  ActionTypes.INCREMENT:
+    return  {  ...  state,  [  counterCa pt ion)  :  state  [  counterCaption]  +  1};
+    default:
+       return state
+  }
+}
+
+```
+* Store.js
+
+```
+import  {createStore}  from  ’ redux ’ J
+import  reducer  from  ’. / Reducer. ] S ’;
+const  initValues  = {
+’ Fir st ’: 0,
+’ Second  ’: 10,
+’ T hird  ’: 20
+const  store=  createStore (reducer ,  initValues) ;
+export  default  store ;
+
+
+```
+
+* View.js 发布订阅，监听变化更新视图
+
+
+## React-Redux
+* react-redux的两个最主要功能
+  1. connect:连接容器组件和傻瓜组件
+  2. Provider：提供包含 store的context
+
+* export  default  connect(mapStateToProps,  mapDispatchToProps)(Counter)   ownProp
+* export  default  connect(mapStateToProps,  mapDispatchToProps) 执行结果是一个函数 立刻执行参数是Counter这个傻瓜组件
+* 把Store上的状态转化为内层傻瓜组件的prop  (mapStateToProps)
+* 把内层傻瓜组件中用户状态转化为派送给Store的动作。 (mapDispatchToProps)
+
+* react-redux 的 store  subscribe  dispatch  getState
+
+
+* ActionType.js
+* Action.js  返回对象中必有一个type字段代表 action 类型,还可能有其他字段代表整个动作承载的数据
+* Reducer.js
+* Store.js  // createStore  combineReducers
+
+
+* 当一个包含ref属性的组件完成装载过程的时候,会看一看ref属性是不是一个函数,如果是,就会调用这个函数,参数就是这个组件代表的DOM元素。
+
+
+* react-redux中connect的装饰器用法 @connect
