@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const Router = require('koa-router')
 const router = new Router()
 
@@ -134,7 +135,13 @@ router.post(
     const { file } = ctx.req
     const { id } = ctx.req.body
     console.log('上传图片:',file,id)
-    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001${file}`,id)
+    const uploads =  '/uploads/'
+    const {
+      originalname,
+      mimetype } = ctx.req.file
+      let newName = uploads + path.extname(originalname)
+      let err = fs.renameSync('',originalname)
+    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001${upload}${file.originalname}`,id)
     await next()
   },
   responseOK
