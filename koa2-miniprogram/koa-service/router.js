@@ -1,6 +1,7 @@
 const path = require('path')
 const Router = require('koa-router')
 const router = new Router()
+
 const multer = require('koa-multer')
 const account = require('./actions/account')
 const photo = require('./actions/photo')
@@ -76,7 +77,7 @@ router.post(
   '/album',
   auth,
   async (ctx, next) => {
-    const { name } = ctx.request.body
+    const { name } = ctx.request.body   
     await photo.addAlbum(ctx.state.user.id, name) //   auth  中间件 赋值了 全局的变量
     await next()
   },

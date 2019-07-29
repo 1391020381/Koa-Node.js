@@ -20,7 +20,7 @@ export function createAlbum(title) {
   return POST({
     url: '/album',
     data: {
-      title
+     name:title
     }
   })
 }

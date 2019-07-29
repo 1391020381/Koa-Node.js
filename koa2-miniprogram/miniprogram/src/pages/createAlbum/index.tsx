@@ -61,6 +61,9 @@ class Index extends Component {
     }
     try{
       const {data,status} = await createAlbum(this.state.title)
+      if(status === 0){
+        this.go2Back()
+      }
     }catch(e){
       console.log(e)
     }
