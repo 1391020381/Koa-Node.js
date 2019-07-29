@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { AtButton, AtImagePicker } from 'taro-ui'
-import { getAlbumList, upladPhoto } from '../../service/api.ts'
+import { upladPhoto, getPhotosByAlbumId } from '../../service/api.ts'
 import './index.scss'
 
 // #region 书写注意
@@ -31,14 +31,15 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      albumList: [],
+      imageList: [],
       files: []
     }
   }
   componentWillReceiveProps(nextProps) {
   }
   componentWillMount() {
-    this.getAlbumList()
+    console.log(2342343)
+    this.getPhotosByAlbumId()
   }
   componentWillUnmount() {
 
@@ -47,21 +48,6 @@ class Index extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
-  async getAlbumList() {
-    try {
-      const { data, status } = await getAlbumList()
-      console.log(data, status)
-      if (status === 0) {
-        this.setState(
-          {
-            albumList: data || []
-          }
-        )
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
   onChange(files) {
     console.log('files:', files)
     this.uploadImage(files)
@@ -69,7 +55,8 @@ class Index extends Component {
   }
   async uploadImage(files, name) {
     try {
-      const { data, status } = await upladPhoto(files, 'file')
+      const albumId = this.$router.params.albumId
+      const { data, status } = await upladPhoto(files, 'file', albumId)
       if (status === 0) {
         this.setState({
           files
@@ -79,27 +66,31 @@ class Index extends Component {
       console.log(e)
     }
   }
-  async go2ImageList(item) {
-    console.log('跳转到某个相册的图片列表:', item)
-    Taro.navigateTo({url:`/pages/albumList/index?albumId=${item._id}`}) 
-  }
-  createAlbum(){
-    Taro.navigateTo({url:'/pages/createAlbum/index'}) 
+  async getPhotosByAlbumId(albumId) {
+    try {
+      const albumId = this.$router.params.albumId
+      const { data, status } = await getPhotosByAlbumId(albumId)
+      if (status === 0) {
+        this.setState({
+          imageList: data
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
   render() {
     return (
       <View className='album-list'>
-        <View className="create-album album" onClick={this.createAlbum.bind(this)}>
-          <View className="at-icon at-icon-add icon"></View>
-          <View className="desc">新建相册</View>
-        </View>
-        {this.state.albumList.map(item => {
+        <AtImagePicker className='image uploadPicker'
+          files={this.state.files}
+          onChange={this.onChange.bind(this)}
+        />
+        {this.state.imageList.map(item => {
           return <Image
-            className="album"
-            index={item._id}
+            className='image'
             style='width: 110px;height: 110px;background: #fff;'
-            src={item.fm||'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
-            onClick={this.go2ImageList.bind(this, item)}
+            src={item.src||'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
           />
         })}
       </View>

@@ -1,6 +1,7 @@
 import { GET, POST } from './request'
 import baseUrl from './config'
 import Taro from '@tarojs/taro'
+import { func } from 'prop-types';
 export function login(code) {
   return GET({
     url: '/login',
@@ -24,7 +25,7 @@ export function createAlbum(title) {
     }
   })
 }
-export function upladPhoto(files, name) {
+export function upladPhoto(files, name,albumId) {
   return Taro.uploadFile({
     url: `${baseUrl}/photo`,
     filePath: files[0].file.path,
@@ -32,6 +33,14 @@ export function upladPhoto(files, name) {
     header: {
       "Content-Type": "multipart/form-data",
       'x-session': Taro.getStorageSync('sessionKey')
+    },
+    formData: {
+      'id': albumId
     }
+  })
+}
+export function getPhotosByAlbumId (albumId){
+  return GET({
+    url:`/xcx/album/${albumId}`
   })
 }

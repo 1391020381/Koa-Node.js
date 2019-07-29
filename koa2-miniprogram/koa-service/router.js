@@ -115,7 +115,16 @@ router.get('/xcx/album', auth, async (ctx, next) => {
     status: 0
   }
 })
+// 单个相册的图片
 
+router.get('/xcx/album/:albumId',auth,async (ctx,next)=>{
+  let albumId = ctx.params.albumId
+  const imageList = await await photo.getPhotosByAlbumId(albumId)
+  ctx.body = {
+    data:imageList,
+    status:0
+  }
+})
 // 上传图片
 router.post(
   '/photo',
@@ -125,7 +134,7 @@ router.post(
     const { file } = ctx.req
     const { id } = ctx.req.body
     console.log('上传图片:',file,id)
-    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001`,id)
+    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001${file}`,id)
     await next()
   },
   responseOK

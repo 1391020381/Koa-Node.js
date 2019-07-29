@@ -29,7 +29,10 @@ module.exports = {
      },item.toObject())
     }))
   },
-  async add(userId,url){
+  async getPhotosByAlbumId(albumId) {
+    return  await photo.getPhotosByAlbumId(albumId)
+  },
+  async add(userId,url,albumId){
     return photo.add(userId,url,albumId)
   }
 }

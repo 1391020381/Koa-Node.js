@@ -30,6 +30,7 @@ class App extends Component {
       'pages/home/index',
       'pages/album/index',
       'pages/createAlbum/index',
+      'pages/albumList/index',
       'pages/index/index'
     ],
     window: {
