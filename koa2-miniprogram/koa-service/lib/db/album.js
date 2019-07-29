@@ -24,6 +24,7 @@ module.exports = {
     return Album.remove(id)
   },
   async getAlbums(userId, pageIndex, pageSize) {
+    console.log('userId:',userId)
     let result
     if (pageSize) {
       result = await Album.find({
@@ -32,7 +33,7 @@ module.exports = {
         .skip((pageIndex - 1) * pageSize)
         .limit(pageSize)
     } else {
-      result = await Album.find(userId).sort({
+      result = await Album.find({userId}).sort({
         updated: -1
       })
     }

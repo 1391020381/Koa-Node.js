@@ -19,13 +19,14 @@ module.exports = {
   },
   async getAlbum(userId,pageIndex,pageSize){ // 根据 userId 查询 所有 相册 
     const albums = await album.getAlbums(userId)
+    console.log('获取相册列表:',albums)
     return Promise.all(albums.map(async function(item){
       const id = item._id
       let ps = await photo.getPhotosByAlbumId(id)
      return Object.assign({
        photoCount:ps.length,
-       fm:ps[0]?ps[0].url:nul
-     }.item.toObject())
+       fm:ps[0]?ps[0].url:null
+     },item.toObject())
     }))
   },
   async add(userId,url){

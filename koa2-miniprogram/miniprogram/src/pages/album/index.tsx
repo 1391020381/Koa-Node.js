@@ -96,8 +96,8 @@ class Index extends Component {
           return (<Image
             className="album"
             index={index}
-            style='width: 300px;height: 100px;background: #fff;'
-            src={item.fm}
+            style='width: 110px;height: 110px;background: #fff;'
+            src={item.fm||'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
             onClick={this.go2ImageList.bind(this, item)}
           />)
         })}
