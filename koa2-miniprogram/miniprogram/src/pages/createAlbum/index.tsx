@@ -1,8 +1,8 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
-import { AtButton, AtImagePicker } from 'taro-ui'
-import { getAlbumList, upladPhoto } from '../../service/api.ts'
+import { AtInput,AtButton  } from 'taro-ui'
+import {createAlbum} from '../../service/api'
 import './index.scss'
 
 // #region 书写注意
@@ -26,19 +26,17 @@ class Index extends Component {
  * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
  */
   config: Config = {
-    navigationBarTitleText: '相册列表'
+    navigationBarTitleText: '创建相册'
   }
   constructor() {
     super(...arguments)
     this.state = {
-      albumList: [],
-      files: []
+      title: ''
     }
   }
   componentWillReceiveProps(nextProps) {
   }
   componentWillMount() {
-    this.getAlbumList()
   }
   componentWillUnmount() {
 
@@ -47,60 +45,42 @@ class Index extends Component {
   componentDidShow() { }
 
   componentDidHide() { }
-  async getAlbumList() {
-    try {
-      const { data, status } = await getAlbumList()
-      console.log(data, status)
-      if (status === 0) {
-        this.setState(
-          {
-            albumList: data || []
-          }
-        )
-      }
-    } catch (e) {
+  handleChange(value){
+   this.setState({
+     title:value
+   })
+  }
+  async createAlbum(){
+    if(!this.state.title){
+      Taro.showToast({
+        title: '请输入相册名称',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    try{
+      const {data,status} = await createAlbum(this.state.title)
+    }catch(e){
       console.log(e)
     }
   }
-  onChange(files) {
-    console.log('files:', files)
-    this.uploadImage(files)
-
-  }
-  async uploadImage(files, name) {
-    try {
-      const { data, status } = await upladPhoto(files, 'file')
-      if (status === 0) {
-        this.setState({
-          files
-        })
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  async go2ImageList(item) {
-    console.log('跳转到某个相册的图片列表:', item)
-  }
-  createAlbum(){
-    Taro.navigateTo({url:'/pages/createAlbum/index'}) 
+  go2Back(){
+    Taro.navigateTo({url:'/pages/album/index'}) 
   }
   render() {
     return (
-      <View className='album-list'>
-        <View className="create-album album" onClick={this.createAlbum.bind(this)}>
-          <View className="at-icon at-icon-add icon"></View>
-          <View className="desc">新建相册</View>
-        </View>
-        {this.state.albumList.length.map((item, index) => {
-          return (<Image
-            className="album"
-            index={index}
-            style='width: 300px;height: 100px;background: #fff;'
-            src={item.fm}
-            onClick={this.go2ImageList.bind(this, item)}
-          />)
-        })}
+      <View className='create-album'>
+        <AtInput
+          name='value'
+          title=''
+          type='text'
+          placeholder='请输入相册名称'
+          value={this.state.title}
+          onChange={this.handleChange.bind(this)}
+        />
+        <AtButton type='primary' className='btn' onClick={this.createAlbum.bind(this)}>创建相册</AtButton>
+        <AtButton type='secondary' className='btn' onClick={this.go2Back.bind(this)}>返回</AtButton>
       </View>
     )
   }

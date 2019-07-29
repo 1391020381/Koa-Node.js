@@ -7,7 +7,7 @@ import home from './pages/home'
 import configStore from './store'
 import 'taro-ui/dist/style/index.scss'
 import './app.scss'
-import {login} from './service/api.ts'
+import { login } from './service/api.ts'
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -29,6 +29,7 @@ class App extends Component {
     pages: [
       'pages/home/index',
       'pages/album/index',
+      'pages/createAlbum/index',
       'pages/index/index'
     ],
     window: {
@@ -39,30 +40,29 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {
-   this.getToken()
+  componentDidMount() {
+    this.getToken()
   }
-  async getToken(){
-   try{
-    const { code } = await Taro.login()
-    console.log('login-code:',code)
-    const {status,data:{sessionKey}} = await login(code)
-    if(status === 0){
-      Taro.setStorageSync('sessionKey',sessionKey)
+  async getToken() {
+    try {
+      const { code } = await Taro.login()
+      const { status, data: { sessionKey } } = await login(code)
+      if (status === 0) {
+        Taro.setStorageSync('sessionKey', sessionKey)
+      }
+    } catch (e) {
+      console.log('e:', e)
     }
-   }catch(e){
-     console.log('e:',e)
-   }
   }
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentDidCatchError () {}
+  componentDidCatchError() { }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Index />

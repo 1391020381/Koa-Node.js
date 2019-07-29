@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro'
 import baseUrl from './config'
 
  async function  request(params, method = 'GET') {
-  console.log('request-params:',params)
   let { url, data } = params
   let contentType = 'application/x-www-form-urlencoded'
   contentType = params.contentType || contentType
@@ -21,7 +20,6 @@ import baseUrl from './config'
      if(statusCode === 200){
       return  Promise.resolve(data)
      }else{
-       console.log('errMsg:',errMsg)
      }
    }catch(e){
     return  Promise.reject(e)

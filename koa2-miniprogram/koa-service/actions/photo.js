@@ -1,4 +1,5 @@
 const album = require('../lib/db/album')
+const photo = require('../lib/db/photo')
 module.exports = {
   async addAlbum(userId,name){
     return album.add(userId,name) 
@@ -17,9 +18,7 @@ module.exports = {
     const photos = await photo.getPhotosByAlbumIdCount(id)
   },
   async getAlbum(userId,pageIndex,pageSize){ // 根据 userId 查询 所有 相册 
-    console.log('album:',album)
     const albums = await album.getAlbums(userId)
-    console.log('albums------------:',albums)
     return Promise.all(albums.map(async function(item){
       const id = item._id
       let ps = await photo.getPhotosByAlbumId(id)

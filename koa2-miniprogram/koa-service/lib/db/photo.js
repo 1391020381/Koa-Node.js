@@ -9,6 +9,10 @@ module.exports = {
     })
   },
   async add(userId,url,albumId) {
-    
+    return Photo.create({
+      userId,
+      url,
+      albumId
+    })
   }
 }

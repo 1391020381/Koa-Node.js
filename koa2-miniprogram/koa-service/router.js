@@ -123,6 +123,9 @@ router.post(
   async (ctx, next) => {
     const { file } = ctx.req
     const { id } = ctx.req.body
+    console.log('上传图片:',file,id)
+    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001`,id)
+    await next()
   },
   responseOK
 )

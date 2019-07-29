@@ -1,0 +1,21 @@
+.album-list {
+  display: flex;
+  padding:0 20px;
+  .album {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    border:1px solid #eee;
+  }
+  .create-album {
+    flex-direction: column;
+    .icon{
+      font-size:60px;
+    }
+    .desc{
+      margin-top:20px;
+    }
+  }
+}
