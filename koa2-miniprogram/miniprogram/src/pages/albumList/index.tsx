@@ -86,6 +86,7 @@ class Index extends Component {
   async deleteImage(item) {
     try {
       const { data, status } = await deleteImage(item._id)
+      this.getPhotosByAlbumId()
     } catch (e) {
 
     }

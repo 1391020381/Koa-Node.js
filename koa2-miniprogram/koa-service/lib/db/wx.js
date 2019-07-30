@@ -19,7 +19,6 @@ module.exports = {
             if (body.errcode) {
               reject(new Error(body.errmsg))
             } else {
-              console.log('jscode2session:',body)
               //  { session_key: 'YZbXQgvu21uKPlJ3orBzFw==',openid: 'oJte31LdIzkQPN4h81H02q0ujmCM' }
               resolve(body)
             }
