@@ -56,6 +56,7 @@ class Index extends Component {
   async uploadImage(files, name) {
     try {
       const albumId = this.$router.params.albumId
+      console.log('files:',files)
       const { data, status } = await upladPhoto(files, 'file', albumId)
       if (status === 0) {
         this.setState({

@@ -14,7 +14,9 @@ const storage = multer.diskStorage({
   destination: path.join(__dirname, 'uploads'),
   filename(req, file, cb) {
     const ext = path.extname(file.originalname)
-    cb(null, uuid.v4() + ext)
+    const newName = Date.now() + ext
+    req.newName = newName
+    cb(null, newName)
   }
 })
 const uploader = multer({
@@ -22,7 +24,6 @@ const uploader = multer({
 })
 router.get('/login', async (ctx, next) => {
   const code = ctx.query.code
-  console.log(`[login] 用户登陆Code为${code}`)
   ctx.body = {
     status: 0,
     data: await account.login(code)
@@ -134,14 +135,8 @@ router.post(
   async (ctx, next) => {
     const { file } = ctx.req
     const { id } = ctx.req.body
-    console.log('上传图片:',file,id)
-    const uploads =  '/uploads/'
-    const {
-      originalname,
-      mimetype } = ctx.req.file
-      let newName = uploads + path.extname(originalname)
-      let err = fs.renameSync('',originalname)
-    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001${upload}${file.originalname}`,id)
+    const newName =  ctx.req.newName
+    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001/${newName}`,id)
     await next()
   },
   responseOK
