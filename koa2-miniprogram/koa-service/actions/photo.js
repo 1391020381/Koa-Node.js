@@ -33,5 +33,8 @@ module.exports = {
   },
   async add(userId,url,albumId){
     return photo.add(userId,url,albumId)
+  },
+  async deleteImage(id){
+    return await photo.update(id)
   }
 }

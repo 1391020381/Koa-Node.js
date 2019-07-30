@@ -24,7 +24,6 @@ module.exports = {
     return Album.remove(id)
   },
   async getAlbums(userId, pageIndex, pageSize) {
-    console.log('userId:',userId)
     let result
     if (pageSize) {
       result = await Album.find({

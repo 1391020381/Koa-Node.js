@@ -50,7 +50,6 @@ class Index extends Component {
   async getAlbumList() {
     try {
       const { data, status } = await getAlbumList()
-      console.log(data, status)
       if (status === 0) {
         this.setState(
           {
@@ -63,7 +62,6 @@ class Index extends Component {
     }
   }
   onChange(files) {
-    console.log('files:', files)
     this.uploadImage(files)
 
   }
@@ -80,7 +78,6 @@ class Index extends Component {
     }
   }
   async go2ImageList(item) {
-    console.log('跳转到某个相册的图片列表:', item)
     Taro.navigateTo({url:`/pages/albumList/index?albumId=${item._id}&name=${item.name}`}) 
   }
   createAlbum(){
@@ -97,7 +94,7 @@ class Index extends Component {
           return <Image
             className="album"
             index={item._id}
-            style='width: 110px;height: 110px;background: #fff;'
+            style='width: 100%;background: #fff;'
             src={item.fm||'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
             onClick={this.go2ImageList.bind(this, item)}
           />

@@ -8,15 +8,17 @@ module.exports = {
       isDelete: false
     })
   },
-  async add(userId,url,albumId) {
+  async add(userId, url, albumId) {
     return Photo.create({
       userId,
       url,
       albumId
     })
   },
-  async getPhotosByAlbumId (albumId,pageIndex, pageSize){
-    console.log('albumId:',albumId)
+  async update(id) {
+    return Photo.findByIdAndUpdate(id, { isDelete: true })
+  },
+  async getPhotosByAlbumId(albumId, pageIndex, pageSize) {
     let result = ''
     if (pageSize) {
       result = await Photo.find({
@@ -25,7 +27,7 @@ module.exports = {
         .skip((pageIndex - 1) * pageSize)
         .limit(pageSize)
     } else {
-      result = await Photo.find({albumId}).sort({
+      result = await Photo.find({ albumId }).sort({
         updated: -1
       })
     }

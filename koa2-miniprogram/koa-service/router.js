@@ -73,13 +73,12 @@ router.get('/login/errcode/check/:code', async (ctx, next) => {
   }
 })
 
-
 //添加相册
 router.post(
   '/album',
   auth,
   async (ctx, next) => {
-    const { name } = ctx.request.body   
+    const { name } = ctx.request.body
     await photo.addAlbum(ctx.state.user.id, name) //   auth  中间件 赋值了 全局的变量
     await next()
   },
@@ -119,14 +118,25 @@ router.get('/xcx/album', auth, async (ctx, next) => {
 })
 // 单个相册的图片
 
-router.get('/xcx/album/:albumId',auth,async (ctx,next)=>{
+router.get('/xcx/album/:albumId', auth, async (ctx, next) => {
   let albumId = ctx.params.albumId
   const imageList = await await photo.getPhotosByAlbumId(albumId)
   ctx.body = {
-    data:imageList,
-    status:0
+    data: imageList,
+    status: 0
   }
 })
+router.post(
+  '/deleteImage',
+  auth,
+  async (ctx, next) => {
+    console.log(ctx.request.body)
+    let { id } = ctx.request.body
+    await photo.deleteImage(id)
+    await next()
+  },
+  responseOK
+)
 // 上传图片
 router.post(
   '/photo',
@@ -135,8 +145,8 @@ router.post(
   async (ctx, next) => {
     const { file } = ctx.req
     const { id } = ctx.req.body
-    const newName =  ctx.req.newName
-    await photo.add(ctx.state.user.id,`http://127.0.0.1:4001/${newName}`,id)
+    const newName = ctx.req.newName
+    await photo.add(ctx.state.user.id, `http://127.0.0.1:4001/${newName}`, id)
     await next()
   },
   responseOK

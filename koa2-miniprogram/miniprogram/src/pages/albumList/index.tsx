@@ -1,8 +1,8 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
-import { AtButton, AtImagePicker } from 'taro-ui'
-import { upladPhoto, getPhotosByAlbumId } from '../../service/api.ts'
+import { AtButton, AtImagePicker, AtSwipeAction } from 'taro-ui'
+import { upladPhoto, getPhotosByAlbumId, deleteImage } from '../../service/api.ts'
 import './index.scss'
 
 // #region 书写注意
@@ -41,7 +41,6 @@ class Index extends Component {
     Taro.setNavigationBarTitle({
       title: this.$router.params.name
     })
-    console.log(this.$router.params)
     this.getPhotosByAlbumId()
   }
   componentWillUnmount() {
@@ -52,14 +51,13 @@ class Index extends Component {
 
   componentDidHide() { }
   onChange(files) {
-    console.log('files:', files)
     this.uploadImage(files)
 
   }
   async uploadImage(files, name) {
     try {
       const albumId = this.$router.params.albumId
-      console.log('files:', files)
+
       const { data: { status } } = await upladPhoto(files, 'file', albumId)  // data: "{"status":0}"
       // if (status === 0) {
       //   this.setState({
@@ -85,6 +83,13 @@ class Index extends Component {
       console.log(e)
     }
   }
+  async deleteImage(item) {
+    try {
+      const { data, status } = await deleteImage(item._id)
+    } catch (e) {
+
+    }
+  }
   render() {
     return (
       <View className='album-list'>
@@ -93,11 +98,13 @@ class Index extends Component {
           onChange={this.onChange.bind(this)}
         />
         {this.state.imageList.map(item => {
-          return <Image
+          return (!item.isDelete && <Image
             className='image'
-            style='width: 110px;height: 110px;background: #fff;'
+            style='width: 100%;background: #fff;'
             src={item.url || 'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
-          />
+          >
+            <View className="at-icon at-icon-close delete-icon" onClick={this.deleteImage.bind(this, item)}></View>
+          </Image>)
         })}
       </View>
     )

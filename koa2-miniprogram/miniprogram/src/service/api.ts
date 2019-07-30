@@ -44,3 +44,11 @@ export function getPhotosByAlbumId (albumId){
     url:`/xcx/album/${albumId}`
   })
 }
+export function deleteImage(_id){
+  return POST({
+    url:'/deleteImage',
+    data:{
+      id:_id
+    }
+  })
+}

@@ -6,7 +6,18 @@
   }
   .image {
    float:left;
-   margin-left:20px;
+  //  margin-left:20px;
    margin-top:20px;
+   position: relative;
+   .delete-icon {
+     position: absolute;
+     font-size:36px;
+     color: #eee;
+     top:0;
+     right:0;
+   }
+  }
+  .image:last-child{
+    margin-bottom: 30px;
   }
 }
