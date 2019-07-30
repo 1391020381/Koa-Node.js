@@ -81,7 +81,7 @@ class Index extends Component {
   }
   async go2ImageList(item) {
     console.log('跳转到某个相册的图片列表:', item)
-    Taro.navigateTo({url:`/pages/albumList/index?albumId=${item._id}`}) 
+    Taro.navigateTo({url:`/pages/albumList/index?albumId=${item._id}&name=${item.name}`}) 
   }
   createAlbum(){
     Taro.navigateTo({url:'/pages/createAlbum/index'}) 

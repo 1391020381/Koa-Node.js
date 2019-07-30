@@ -38,7 +38,10 @@ class Index extends Component {
   componentWillReceiveProps(nextProps) {
   }
   componentWillMount() {
-    console.log(2342343)
+    Taro.setNavigationBarTitle({
+      title: this.$router.params.name
+    })
+    console.log(this.$router.params)
     this.getPhotosByAlbumId()
   }
   componentWillUnmount() {
@@ -56,13 +59,15 @@ class Index extends Component {
   async uploadImage(files, name) {
     try {
       const albumId = this.$router.params.albumId
-      console.log('files:',files)
-      const { data, status } = await upladPhoto(files, 'file', albumId)
-      if (status === 0) {
-        this.setState({
-          files
-        })
-      }
+      console.log('files:', files)
+      const { data: { status } } = await upladPhoto(files, 'file', albumId)  // data: "{"status":0}"
+      // if (status === 0) {
+      //   this.setState({
+      //     files
+      //   })
+      //   this.getPhotosByAlbumId()
+      // }
+      this.getPhotosByAlbumId()
     } catch (e) {
       console.log(e)
     }
@@ -91,7 +96,7 @@ class Index extends Component {
           return <Image
             className='image'
             style='width: 110px;height: 110px;background: #fff;'
-            src={item.src||'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
+            src={item.url || 'http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'}
           />
         })}
       </View>
