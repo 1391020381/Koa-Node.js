@@ -60,9 +60,9 @@ router.get('/login/errcode/check/:code', async (ctx, next) => {
       }
     } else {
       if (Date.now() - startTime < 10000) {
-        await new Promise(resolve => {
+        await new Promise((resolve,reject) => {
           process.nextTick(() => {
-            resovle()
+            resolve()
           })
         })
         await login()
@@ -71,6 +71,7 @@ router.get('/login/errcode/check/:code', async (ctx, next) => {
       }
     }
   }
+await login()
 })
 
 //添加相册

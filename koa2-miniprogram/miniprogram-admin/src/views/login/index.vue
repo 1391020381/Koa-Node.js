@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getQrcode } from '@/api/user.js'
+import { getQrcode, getUserInfo } from '@/api/user.js'
 import Qrcode from '@/components/Qrcode'
 export default {
   name: 'Login',
@@ -29,6 +29,9 @@ export default {
   },
   created() {
     this.getQrcode()
+    // setInterval(() => {
+    //   this.text && this.getUserInfo()
+    // }, 1000)
   },
   methods: {
     async getQrcode() {
@@ -36,9 +39,21 @@ export default {
         const { data, status } = await getQrcode()
         if (status === 0) {
           console.log(data)
+          this.text = data
+          this.getUserInfo()
           this.$nextTick(() => {
             this.$refs.qrcode.initQrcode({ text: data, width: 400, height: 400 })
           })
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async getUserInfo() {
+      try {
+        const { data, status } = await getUserInfo(this.text)
+        if (status === 0) {
+          console.log(data)
         }
       } catch (e) {
         console.log(e)

@@ -6,6 +6,13 @@ export function getQrcode() {
     method: 'get'
   })
 }
+export function getUserInfo(code) {
+  return request({
+    url: `/login/errcode/check/${code}`,
+    method: 'get',
+    timeout: 60000
+  })
+}
 export function login(data) {
   return request({
     url: '/user/login',

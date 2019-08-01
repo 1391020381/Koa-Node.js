@@ -3,14 +3,18 @@ import baseUrl from './config'
 import Taro from '@tarojs/taro'
 import { func } from 'prop-types';
 export function login(code) {
-  return GET({
+  return GET({  // 参数在 query上
     url: '/login',
     data: {
       code
     }
   })
 }
-
+export function bindCodeWithSessionKey(code){
+  return GET({
+    url:`/login/ercode/${code}`
+  })
+}
 export function getAlbumList() { // 通过sessionKey来标识每个用户
   return GET({
     url: '/xcx/album',
@@ -50,5 +54,11 @@ export function deleteImage(_id){
     data:{
       id:_id
     }
+  })
+}
+export function adminLogin(code){
+  return GET({
+    url:`/login/ercode/${code}`,
+    
   })
 }

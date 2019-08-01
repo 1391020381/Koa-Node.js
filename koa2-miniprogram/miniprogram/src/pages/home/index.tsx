@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
-
+import {bindCodeWithSessionKey } from '../../service/api'
 import './index.scss'
 
 // #region 书写注意
@@ -44,6 +44,7 @@ class Index extends Component {
       const { errMsg, result } = await Taro.scanCode({})
       if (errMsg === 'scanCode:ok') {
         console.log('result-scanCode:', result)
+        await bindCodeWithSessionKey(result)
       }
     } catch (e) {
       console.log('scanCode-e:', e)
